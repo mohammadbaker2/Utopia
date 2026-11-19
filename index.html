@@ -309,6 +309,8 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 .stage{perspective:900px}
 
 /* ordering */
+.staffmode main,.staffmode .cartbar,.staffmode .giant{display:none}
+.staffmode .staff{min-height:70vh;padding-top:90px}
 .slogin{display:flex;gap:.6rem;flex-wrap:wrap;max-width:640px;margin:0 0 1.2rem;align-items:center}
 .slogin input{flex:1 1 200px;min-width:0;padding:.65rem 1rem;border-radius:999px;border:1.5px solid rgba(243,236,220,.35);background:rgba(255,255,255,.08);color:var(--on-brand);font:400 1rem var(--body);direction:ltr}
 .slogin .omsg{flex-basis:100%;margin:0;color:var(--sand)}
@@ -1049,6 +1051,7 @@ function renderMine(){
 function renderStaff(){
   var show=ST.canStaff||(!window.claude&&!FB.on&&location.hash==="#orders")||(FB.on&&/^#(staff|orders)$/.test(location.hash)),L=T[lang];
   $("staff").hidden=!show;$("navOrders").hidden=!show;
+  $("app").classList.toggle("staffmode",show&&/^#(staff|orders)$/.test(location.hash));
   if(!show)return;
   var needLogin=FB.on&&!ST.canStaff;
   $("sLogin").hidden=!needLogin;$("sOut").hidden=!(FB.on&&ST.canStaff);$("snd").hidden=needLogin;$("sOrders").hidden=needLogin;
@@ -1185,7 +1188,7 @@ if(!initFB()&&window.claude&&claude.use){
   L.querySelectorAll(".coin img").forEach(function(i){i.src=logo});
   function playIntro(){app.classList.remove("pre");app.classList.add("play")}
   function end(){L.classList.add("gone");root.classList.remove("ld-lock")}
-  if(RM){end();return}
+  if(RM||/^#(staff|orders)$/.test(location.hash)){end();app.classList.remove("pre");app.classList.add("play");return}
   app.classList.add("pre");root.classList.add("ld-lock");
   var dur=2600,t0=null,phase=0;
   function step(ts){
