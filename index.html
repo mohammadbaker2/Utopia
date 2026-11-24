@@ -384,6 +384,8 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 @keyframes fillwave{to{-webkit-mask-position:90px 0,0 21px;mask-position:90px 0,0 21px}}
 :is(.card:hover,.card:focus-visible,.card.on):not(.mine){--card-fg:var(--tx);--card-mute:var(--tx);--chip-fg:var(--tx);--chip-line:var(--tx)}
 .card h4,.card small,.chip{transition:color .35s,border-color .35s}
+.staffmode nav a:not(#navOrders),.staffmode .pill{display:none}
+.staffmode,.staffmode body{background:var(--brand-deep)}
 /* ordering */
 .staffmode main,.staffmode .cartbar,.staffmode .giant{display:none}
 .staffmode .staff{min-height:70vh;padding-top:90px}
@@ -724,6 +726,7 @@ hot:[["choc","شوكولاتة وحلويات","Chocolate & sweet",function(n){r
 milkshakes:[["fruit","فواكه","Fruity",function(n){return /Strawberry|Blueberry/.test(n)}],["bisc","بسكويت وشوكولاتة","Cookies & choc",function(n){return /Lotus|Oreo|Kinder|Nutella|Cornetto/.test(n)}],["oth","كلاسيك","Classic",function(n){return /Vanilla|Skittles|Cerelac|Pistachio/.test(n)}]],
 smoothies:[["berry","توت وفراولة","Berry",function(n){return /Strawberry|Berries/.test(n)}],["trop","استوائي","Tropical",function(n){return /Passion|Mango|Pineapple|Kiwi|Watermelon/.test(n)}]]
 };
+var MODE=window.UT_MODE||"both";
 var $=function(id){return document.getElementById(id)};
 var NARROW=innerWidth<700,RM=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches,FINE=window.matchMedia&&matchMedia("(hover:hover) and (pointer:fine)").matches;
 try{var s0=localStorage.getItem("utopia-lang");if(s0==="en"||s0==="ar")lang=s0}catch(e){}
@@ -1154,9 +1157,10 @@ function renderMine(){
   }).join(""):'';
 }
 function renderStaff(){
-  var show=ST.canStaff||(!window.claude&&!FB.on&&location.hash==="#orders")||(FB.on&&/^#(staff|orders)$/.test(location.hash)),L=T[lang];
+  if(MODE==="shop")return;
+  var show=MODE==="staff"||ST.canStaff||(!window.claude&&!FB.on&&location.hash==="#orders")||(FB.on&&/^#(staff|orders)$/.test(location.hash)),L=T[lang];
   $("staff").hidden=!show;$("navOrders").hidden=!show;
-  $("app").classList.toggle("staffmode",show&&/^#(staff|orders)$/.test(location.hash));
+  $("app").classList.toggle("staffmode",MODE==="staff"||(show&&/^#(staff|orders)$/.test(location.hash)));
   if(!show)return;
   var needLogin=FB.on&&!ST.canStaff;
   $("sLogin").hidden=!needLogin;$("sOut").hidden=!(FB.on&&ST.canStaff);$("snd").hidden=needLogin;$("sOrders").hidden=needLogin;
@@ -1361,7 +1365,7 @@ $("snd").addEventListener("click",function(){
   try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();AC.resume();sndOn=true;$("snd").textContent=T[lang].st_sndon;beep()}catch(e){}
   try{if(window.Notification&&Notification.permission==="default")Notification.requestPermission()}catch(e){}
 });
-addEventListener("hashchange",renderStaff);
+addEventListener("hashchange",function(){if(FB.on)syncStaff();else renderStaff()});
 addEventListener("storage",function(e){if(e.key==="utopia-orders")refresh()});
 try{$("cName").value=localStorage.getItem("utopia-name")||""}catch(e){}
 var FB={on:false,db:null,auth:null,staffDocs:[],mineDocs:{},unS:null,unM:{},day:""};
@@ -1379,6 +1383,8 @@ function fbSubMine(){
     FB.unM[id]=FB.db.collection("orders").doc(id).onSnapshot(function(s){if(s.exists)FB.mineDocs[id]=s.data();else delete FB.mineDocs[id];fbMerge()},function(){});
   });
 }
+function isSH(){return /^#(staff|orders)$/.test(location.hash)}
+function syncStaff(){var w=!!FB.user&&isSH();if(w!==ST.canStaff){ST.canStaff=w;fbSubStaff();fbMerge()}renderStaff()}
 function fbSubStaff(){
   if(FB.unS){FB.unS();FB.unS=null}
   if(!ST.canStaff)return;
@@ -1390,7 +1396,7 @@ function initFB(){
   if(!window.firebase)return false;
   try{firebase.initializeApp(FBCFG);FB.db=firebase.firestore();FB.auth=firebase.auth()}catch(e){return false}
   FB.on=true;ST.col={doc:function(id){return FB.db.collection("orders").doc(id)}};
-  FB.auth.onAuthStateChanged(function(u){ST.canStaff=!!u;fbSubStaff();fbMerge();renderStaff()});
+  FB.auth.onAuthStateChanged(function(u){FB.user=u;syncStaff()});
   fbSubMine();
   $("sLogin").addEventListener("submit",function(e){
     e.preventDefault();$("sErr").textContent="";
@@ -1417,7 +1423,7 @@ if(!initFB()&&window.claude&&claude.use){
   L.querySelectorAll(".coin img").forEach(function(i){i.src=logo});
   function playIntro(){app.classList.remove("pre");app.classList.add("play")}
   function end(){L.classList.add("gone");root.classList.remove("ld-lock")}
-  if(RM||/^#(staff|orders)$/.test(location.hash)){end();app.classList.remove("pre");app.classList.add("play");return}
+  if(RM||MODE==="staff"||/^#(staff|orders)$/.test(location.hash)){end();app.classList.remove("pre");app.classList.add("play");return}
   app.classList.add("pre");root.classList.add("ld-lock");
   var dur=2600,t0=null,phase=0;
   function step(ts){
