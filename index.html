@@ -386,6 +386,9 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 .card h4,.card small,.chip{transition:color .35s,border-color .35s}
 .staffmode nav a:not(#navOrders),.staffmode .pill{display:none}
 .staffmode,.staffmode body{background:var(--brand-deep)}
+.perr{color:#c0392b;margin:-.4rem 0 .6rem}
+.so .ph{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin-top:.35rem}
+.so .ph .btn{padding:.25rem .8rem;font-size:.85rem;text-decoration:none}
 /* ordering */
 .staffmode main,.staffmode .cartbar,.staffmode .giant{display:none}
 .staffmode .staff{min-height:70vh;padding-top:90px}
@@ -643,6 +646,8 @@ html.ld-lock,html.ld-lock body{overflow:hidden}
     <h3 data-i="o_title"></h3>
     <div id="cartList"></div>
     <label class="fld"><span data-i="o_name"></span><input id="cName" maxlength="24" autocomplete="off"></label>
+    <label class="fld"><span data-i="o_phone"></span><input id="cPhone" type="tel" inputmode="tel" maxlength="16" autocomplete="tel" dir="ltr" placeholder="05XXXXXXXX"></label>
+    <p class="omsg perr" id="pErr" hidden></p>
     <div class="fld"><span data-i="o_pick"></span><div class="pk" id="pick"></div></div>
     <div class="tot"><span data-i="o_total"></span><b id="cTot"></b></div>
     <button class="btn" id="placeBtn" type="button" data-i="o_place"></button>
@@ -657,7 +662,7 @@ html.ld-lock,html.ld-lock body{overflow:hidden}
 <script>
 document.documentElement.classList.add("js");
 var T={
-ar:{z_edit:"عدّل",z_mine:"على مزاجك",z_mine_s:"ركّب مشروبك بنفسك",z_start:"ابدأ",o_title:"طلبك",o_empty:"السلة فاضية. اضغط على سعر أي مشروب لإضافته.",o_name:"اسمك",o_pick:"استلام بعد (دقيقة)",o_place:"أرسل الطلب",o_total:"المجموع",o_mine:"طلباتك",o_new:"بانتظار التحضير",o_prep:"عم نحضّره",o_ready:"جاهز للاستلام",o_done:"تم التسليم",o_cancel:"ملغي",o_in:"باقي",o_local:"الطلب انحفظ على هذا الجهاز فقط (الاتصال المباشر بالكافيه مش متاح لك هلأ).",o_sent:"انرسل طلبك. استلامه بعد",o_cartbar:"سلة الطلب",o_items:"عناصر",o_noname:"زبون",o_tracking:"طلباتك",sf_title:"شاشة الكافيه · الطلبات",sf_login:"دخول",sf_out:"تسجيل خروج",sf_err:"الإيميل أو كلمة السر غلط.",sf_email:"الإيميل",st_empty:"ما في طلبات حالياً.",st_snd:"تفعيل صوت التنبيه",st_sndon:"الصوت شغّال",st_ready:"جاهز",st_deliv:"تسليم",st_cancel:"إلغاء",st_prepare:"حضّر",o_alert_me:"طلبك قيد التحضير:",nav_orders:"الطلبات",add_hint:" اضغط على السعر لتضيفه لطلبك.",o_rm:"حذف",ld1:"نطحن البن",ld2:"نحضّر قهوتك",ld3:"نصب كاسك",nav_menu:"المنيو",nav_studio:"كاسة 3D",nav_inside:"داخل يوتوبيا",nav_visit:"زورونا",eyebrow:"الجامعة العربية الأمريكية · جنين",
+ar:{o_phone:"رقم جوالك (بنتصل فيك إذا صار شي بالطلب)",o_phone_err:"اكتب رقم جوال صحيح مثل 0599123456",o_call:"اتصال",o_wa:"واتساب",z_edit:"عدّل",z_mine:"على مزاجك",z_mine_s:"ركّب مشروبك بنفسك",z_start:"ابدأ",o_title:"طلبك",o_empty:"السلة فاضية. اضغط على سعر أي مشروب لإضافته.",o_name:"اسمك",o_pick:"استلام بعد (دقيقة)",o_place:"أرسل الطلب",o_total:"المجموع",o_mine:"طلباتك",o_new:"بانتظار التحضير",o_prep:"عم نحضّره",o_ready:"جاهز للاستلام",o_done:"تم التسليم",o_cancel:"ملغي",o_in:"باقي",o_local:"الطلب انحفظ على هذا الجهاز فقط (الاتصال المباشر بالكافيه مش متاح لك هلأ).",o_sent:"انرسل طلبك. استلامه بعد",o_cartbar:"سلة الطلب",o_items:"عناصر",o_noname:"زبون",o_tracking:"طلباتك",sf_title:"شاشة الكافيه · الطلبات",sf_login:"دخول",sf_out:"تسجيل خروج",sf_err:"الإيميل أو كلمة السر غلط.",sf_email:"الإيميل",st_empty:"ما في طلبات حالياً.",st_snd:"تفعيل صوت التنبيه",st_sndon:"الصوت شغّال",st_ready:"جاهز",st_deliv:"تسليم",st_cancel:"إلغاء",st_prepare:"حضّر",o_alert_me:"طلبك قيد التحضير:",nav_orders:"الطلبات",add_hint:" اضغط على السعر لتضيفه لطلبك.",o_rm:"حذف",ld1:"نطحن البن",ld2:"نحضّر قهوتك",ld3:"نصب كاسك",nav_menu:"المنيو",nav_studio:"كاسة 3D",nav_inside:"داخل يوتوبيا",nav_visit:"زورونا",eyebrow:"الجامعة العربية الأمريكية · جنين",
 tagline:"المكان المثالي للقهوة",
 lead:"كافيه رقم 1 في الجامعة. قهوة، مشروبات باردة وساخنة، ميلك شيك وسموذي.",
 cta_menu:"شوف المنيو",cta_studio:"جرّب الكاسة 3D",cta_visit:"كيف توصلنا",
@@ -682,7 +687,7 @@ h:["8 ص – 12 ليلاً","8 ص – 12 ليلاً","8 ص – 12 ليلاً","8
 open:"مفتوح الآن",closed:"مغلق الآن",neon_o:"مفتوح",neon_c:"مغلق",btn:"EN",
 cats:{coffee:"قهوة",hot:"مشروبات ساخنة",refreshers:"منعشات",milkshakes:"ميلك شيك",smoothies:"سموذي",cold:"مشروبات باردة"},
 notes:{coffee:"النكهات: فانيلا، بندق، كراميل، كراميل مملح · إضافة بوبا +2"}},
-en:{z_edit:"Edit",z_mine:"Your way",z_mine_s:"Build your own drink",z_start:"Start",o_title:"Your order",o_empty:"Your cart is empty. Tap a price on any drink to add it.",o_name:"Your name",o_pick:"Pick up in (minutes)",o_place:"Place order",o_total:"Total",o_mine:"Your orders",o_new:"Waiting",o_prep:"Being prepared",o_ready:"Ready for pickup",o_done:"Picked up",o_cancel:"Cancelled",o_in:"in",o_local:"Order saved on this device only (a live link to the café isn't available to you right now).",o_sent:"Order sent. Pickup in",o_cartbar:"Order cart",o_items:"items",o_noname:"Guest",o_tracking:"Your orders",sf_title:"Café screen · Orders",sf_login:"Sign in",sf_out:"Sign out",sf_err:"Wrong email or password.",sf_email:"Email",st_empty:"No orders right now.",st_snd:"Enable alert sound",st_sndon:"Sound on",st_ready:"Ready",st_deliv:"Handed over",st_cancel:"Cancel",st_prepare:"Prepare",o_alert_me:"Your order is being prepared:",nav_orders:"Orders",add_hint:" Tap a price to add it to your order.",o_rm:"Remove",ld1:"Grinding the beans",ld2:"Brewing your coffee",ld3:"Pouring your cup",nav_menu:"Menu",nav_studio:"3D Cup",nav_inside:"Inside Utopia",nav_visit:"Visit",eyebrow:"Arab American University · Jenin",
+en:{o_phone:"Your mobile number (we call you if anything comes up)",o_phone_err:"Enter a valid mobile number, e.g. 0599123456",o_call:"Call",o_wa:"WhatsApp",z_edit:"Edit",z_mine:"Your way",z_mine_s:"Build your own drink",z_start:"Start",o_title:"Your order",o_empty:"Your cart is empty. Tap a price on any drink to add it.",o_name:"Your name",o_pick:"Pick up in (minutes)",o_place:"Place order",o_total:"Total",o_mine:"Your orders",o_new:"Waiting",o_prep:"Being prepared",o_ready:"Ready for pickup",o_done:"Picked up",o_cancel:"Cancelled",o_in:"in",o_local:"Order saved on this device only (a live link to the café isn't available to you right now).",o_sent:"Order sent. Pickup in",o_cartbar:"Order cart",o_items:"items",o_noname:"Guest",o_tracking:"Your orders",sf_title:"Café screen · Orders",sf_login:"Sign in",sf_out:"Sign out",sf_err:"Wrong email or password.",sf_email:"Email",st_empty:"No orders right now.",st_snd:"Enable alert sound",st_sndon:"Sound on",st_ready:"Ready",st_deliv:"Handed over",st_cancel:"Cancel",st_prepare:"Prepare",o_alert_me:"Your order is being prepared:",nav_orders:"Orders",add_hint:" Tap a price to add it to your order.",o_rm:"Remove",ld1:"Grinding the beans",ld2:"Brewing your coffee",ld3:"Pouring your cup",nav_menu:"Menu",nav_studio:"3D Cup",nav_inside:"Inside Utopia",nav_visit:"Visit",eyebrow:"Arab American University · Jenin",
 tagline:"The perfect place for coffee",
 lead:"AAUP's No.1 café. Coffee, hot and cold drinks, milkshakes and smoothies.",
 cta_menu:"View the menu",cta_studio:"Try the 3D cup",cta_visit:"Find us",
@@ -1156,6 +1161,11 @@ function renderMine(){
     return '<div class="mo"><div><b>'+esc(itemsTxt(o))+'</b><br><small>'+statusOf(o)+'</small></div>'+(act?'<span class="mt" data-at="'+o.pickupAt+'">'+L.o_in+' '+fmtRem(o.pickupAt-Date.now())+'</span>':'')+'</div>'
   }).join(""):'';
 }
+function phoneHTML(o,L){
+  var p=normPhone(o.phone);if(!p)return "";
+  var intl="970"+p.slice(1);
+  return ' <span class="ph"><bdi dir="ltr">'+esc(p)+'</bdi> <a class="btn ghost" href="tel:'+p+'">'+L.o_call+'</a> <a class="btn ghost" href="https://wa.me/'+intl+'" target="_blank" rel="noopener">'+L.o_wa+'</a></span>';
+}
 function renderStaff(){
   if(MODE==="shop")return;
   var show=MODE==="staff"||ST.canStaff||(!window.claude&&!FB.on&&location.hash==="#orders")||(FB.on&&/^#(staff|orders)$/.test(location.hash)),L=T[lang];
@@ -1168,7 +1178,7 @@ function renderStaff(){
   var list=ORDERS.filter(function(o){return o.status==="new"||o.status==="ready"});
   $("sOrders").innerHTML=list.length?list.map(function(o){
     var rem=o.pickupAt-Date.now(),soon=o.status==="new"&&rem<=240000;
-    return '<div class="so'+(soon?' soon':'')+(o.status==="ready"?' rdy':'')+'"><div class="st"><span class="mt" data-at="'+o.pickupAt+'">'+fmtRem(rem)+'</span><small>'+o.pickupMin+' '+"min"+'</small></div><div class="sb"><b>'+esc(itemsTxt(o))+'</b><br><span>'+esc(o.name||L.o_noname)+'</span>'+(soon?' <em>'+L.st_prepare+'</em>':'')+'</div><div class="sa">'+(o.status==="new"?'<button type="button" class="btn" data-id="'+o.id+'" data-st="ready">'+L.st_ready+'</button>':'<button type="button" class="btn" data-id="'+o.id+'" data-st="done">'+L.st_deliv+'</button>')+'<button type="button" class="btn ghost" data-id="'+o.id+'" data-st="cancel">'+L.st_cancel+'</button></div></div>'
+    return '<div class="so'+(soon?' soon':'')+(o.status==="ready"?' rdy':'')+'"><div class="st"><span class="mt" data-at="'+o.pickupAt+'">'+fmtRem(rem)+'</span><small>'+o.pickupMin+' '+"min"+'</small></div><div class="sb"><b>'+esc(itemsTxt(o))+'</b><br><span>'+esc(o.name||L.o_noname)+'</span>'+phoneHTML(o,L)+(soon?' <em>'+L.st_prepare+'</em>':'')+'</div><div class="sa">'+(o.status==="new"?'<button type="button" class="btn" data-id="'+o.id+'" data-st="ready">'+L.st_ready+'</button>':'<button type="button" class="btn" data-id="'+o.id+'" data-st="done">'+L.st_deliv+'</button>')+'<button type="button" class="btn ghost" data-id="'+o.id+'" data-st="cancel">'+L.st_cancel+'</button></div></div>'
   }).join(""):'<p class="empty" style="color:var(--on-brand-muted)">'+L.st_empty+'</p>';
 }
 function renderOrders(){renderCart();renderMine();renderStaff()}
@@ -1201,12 +1211,21 @@ function checkAlerts(){
   });
 }
 function newId(){return "o"+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function normPhone(s){
+  var d=String(s||"").replace(/[\s\-().]/g,"").replace(/[٠-٩]/g,function(c){return c.charCodeAt(0)-1632});
+  if(/^(\+|00)?(970|972)5\d{8}$/.test(d))d="0"+d.replace(/^(\+|00)?(970|972)/,"");
+  return /^05\d{8}$/.test(d)?d:null;
+}
 function placeOrder(){
   if(!CART.length)return;
   var L=T[lang],tot=0;CART.forEach(function(x){tot+=x.q*x.p});
+  var ph=normPhone($("cPhone").value),pe=$("pErr");
+  if(!ph){pe.textContent=L.o_phone_err;pe.hidden=false;$("cPhone").focus();return}
+  pe.hidden=true;
+  try{localStorage.setItem("utopia-phone",ph)}catch(e){}
   var nm=$("cName").value.trim()||L.o_noname;
   try{localStorage.setItem("utopia-name",nm)}catch(e){}
-  var o={id:newId(),name:nm,items:CART.map(function(x){var r={n:x.n,s:x.s,q:x.q,p:x.p};if(x.o)r.o=x.o;if(x.e)r.e=x.e;if(x.t)r.t=x.t;if(x.c)r.c=1;return r}),total:tot,pickupMin:pickMin,createdAt:Date.now(),pickupAt:Date.now()+pickMin*60000,status:"new",day:dayOf(Date.now())};
+  var o={id:newId(),name:nm,phone:ph,items:CART.map(function(x){var r={n:x.n,s:x.s,q:x.q,p:x.p};if(x.o)r.o=x.o;if(x.e)r.e=x.e;if(x.t)r.t=x.t;if(x.c)r.c=1;return r}),total:tot,pickupMin:pickMin,createdAt:Date.now(),pickupAt:Date.now()+pickMin*60000,status:"new",day:dayOf(Date.now())};
   $("placeBtn").disabled=true;
   putOrder(o).then(function(){
     MINE.push(o.id);try{localStorage.setItem("utopia-my",JSON.stringify(MINE.slice(-20)))}catch(e){}
@@ -1367,7 +1386,7 @@ $("snd").addEventListener("click",function(){
 });
 addEventListener("hashchange",function(){if(FB.on)syncStaff();else renderStaff()});
 addEventListener("storage",function(e){if(e.key==="utopia-orders")refresh()});
-try{$("cName").value=localStorage.getItem("utopia-name")||""}catch(e){}
+try{$("cName").value=localStorage.getItem("utopia-name")||"";$("cPhone").value=localStorage.getItem("utopia-phone")||""}catch(e){}
 var FB={on:false,db:null,auth:null,staffDocs:[],mineDocs:{},unS:null,unM:{},day:""};
 window.ORD_READY=true;renderPick();refresh();
 setInterval(checkAlerts,1000);
