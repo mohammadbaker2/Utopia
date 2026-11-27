@@ -389,6 +389,10 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 .perr{color:#c0392b;margin:-.4rem 0 .6rem}
 .so .ph{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin-top:.35rem}
 .so .ph .btn{padding:.25rem .8rem;font-size:.85rem;text-decoration:none}
+footer .fbar{padding-block:14px;border-top:1px solid rgba(255,255,255,.14);font-size:.82rem;opacity:.9}
+footer .fbar .mb b{color:var(--sand);font-weight:600;letter-spacing:.03em}
+footer .fbar .mb a{color:inherit;text-decoration:none}
+footer .fbar .mb a:hover b{text-decoration:underline}
 /* ordering */
 .staffmode main,.staffmode .cartbar,.staffmode .giant{display:none}
 .staffmode .staff{min-height:70vh;padding-top:90px}
@@ -636,7 +640,8 @@ html.ld-lock,html.ld-lock body{overflow:hidden}
 </section>
 <footer>
   <div class="giant" aria-hidden="true">UTOPIA</div>
-  <div class="wrap"><span>© 2026 Utopia Cafe</span><span data-i="foot"></span><button class="totop" id="totop" type="button" data-i="totop"></button></div>
+  <div class="wrap"><span data-i="foot"></span><button class="totop" id="totop" type="button" data-i="totop"></button></div>
+  <div class="wrap fbar"><span>© 2026 Utopia Cafe</span><span class="mb"><span data-i="dev"></span> <a href="https://www.instagram.com/marsif.c/" target="_blank" rel="noopener"><b dir="ltr">Baker.dev</b></a></span></div>
 </footer>
 <button class="cartbar" id="cartbar" type="button" hidden><span id="cbTxt"></span><b id="cbTot"></b></button>
 <div class="drawer" id="cz" hidden><div class="dp cz" id="czp" role="dialog" aria-modal="true"></div></div>
@@ -662,7 +667,7 @@ html.ld-lock,html.ld-lock body{overflow:hidden}
 <script>
 document.documentElement.classList.add("js");
 var T={
-ar:{o_phone:"رقم جوالك (بنتصل فيك إذا صار شي بالطلب)",o_phone_err:"اكتب رقم جوال صحيح مثل 0599123456",o_call:"اتصال",o_wa:"واتساب",z_edit:"عدّل",z_mine:"على مزاجك",z_mine_s:"ركّب مشروبك بنفسك",z_start:"ابدأ",o_title:"طلبك",o_empty:"السلة فاضية. اضغط على سعر أي مشروب لإضافته.",o_name:"اسمك",o_pick:"استلام بعد (دقيقة)",o_place:"أرسل الطلب",o_total:"المجموع",o_mine:"طلباتك",o_new:"بانتظار التحضير",o_prep:"عم نحضّره",o_ready:"جاهز للاستلام",o_done:"تم التسليم",o_cancel:"ملغي",o_in:"باقي",o_local:"الطلب انحفظ على هذا الجهاز فقط (الاتصال المباشر بالكافيه مش متاح لك هلأ).",o_sent:"انرسل طلبك. استلامه بعد",o_cartbar:"سلة الطلب",o_items:"عناصر",o_noname:"زبون",o_tracking:"طلباتك",sf_title:"شاشة الكافيه · الطلبات",sf_login:"دخول",sf_out:"تسجيل خروج",sf_err:"الإيميل أو كلمة السر غلط.",sf_email:"الإيميل",st_empty:"ما في طلبات حالياً.",st_snd:"تفعيل صوت التنبيه",st_sndon:"الصوت شغّال",st_ready:"جاهز",st_deliv:"تسليم",st_cancel:"إلغاء",st_prepare:"حضّر",o_alert_me:"طلبك قيد التحضير:",nav_orders:"الطلبات",add_hint:" اضغط على السعر لتضيفه لطلبك.",o_rm:"حذف",ld1:"نطحن البن",ld2:"نحضّر قهوتك",ld3:"نصب كاسك",nav_menu:"المنيو",nav_studio:"كاسة 3D",nav_inside:"داخل يوتوبيا",nav_visit:"زورونا",eyebrow:"الجامعة العربية الأمريكية · جنين",
+ar:{dev:"تطوير",o_phone:"رقم جوالك (بنتصل فيك إذا صار شي بالطلب)",o_phone_err:"اكتب رقم جوال صحيح مثل 0599123456",o_call:"اتصال",o_wa:"واتساب",z_edit:"عدّل",z_mine:"على مزاجك",z_mine_s:"ركّب مشروبك بنفسك",z_start:"ابدأ",o_title:"طلبك",o_empty:"السلة فاضية. اضغط على سعر أي مشروب لإضافته.",o_name:"اسمك",o_pick:"استلام بعد (دقيقة)",o_place:"أرسل الطلب",o_total:"المجموع",o_mine:"طلباتك",o_new:"بانتظار التحضير",o_prep:"عم نحضّره",o_ready:"جاهز للاستلام",o_done:"تم التسليم",o_cancel:"ملغي",o_in:"باقي",o_local:"الطلب انحفظ على هذا الجهاز فقط (الاتصال المباشر بالكافيه مش متاح لك هلأ).",o_sent:"انرسل طلبك. استلامه بعد",o_cartbar:"سلة الطلب",o_items:"عناصر",o_noname:"زبون",o_tracking:"طلباتك",sf_title:"شاشة الكافيه · الطلبات",sf_login:"دخول",sf_out:"تسجيل خروج",sf_err:"الإيميل أو كلمة السر غلط.",sf_email:"الإيميل",st_empty:"ما في طلبات حالياً.",st_snd:"تفعيل صوت التنبيه",st_sndon:"الصوت شغّال",st_ready:"جاهز",st_deliv:"تسليم",st_cancel:"إلغاء",st_prepare:"حضّر",o_alert_me:"طلبك قيد التحضير:",nav_orders:"الطلبات",add_hint:" اضغط على السعر لتضيفه لطلبك.",o_rm:"حذف",ld1:"نطحن البن",ld2:"نحضّر قهوتك",ld3:"نصب كاسك",nav_menu:"المنيو",nav_studio:"كاسة 3D",nav_inside:"داخل يوتوبيا",nav_visit:"زورونا",eyebrow:"الجامعة العربية الأمريكية · جنين",
 tagline:"المكان المثالي للقهوة",
 lead:"كافيه رقم 1 في الجامعة. قهوة، مشروبات باردة وساخنة، ميلك شيك وسموذي.",
 cta_menu:"شوف المنيو",cta_studio:"جرّب الكاسة 3D",cta_visit:"كيف توصلنا",
@@ -687,7 +692,7 @@ h:["8 ص – 12 ليلاً","8 ص – 12 ليلاً","8 ص – 12 ليلاً","8
 open:"مفتوح الآن",closed:"مغلق الآن",neon_o:"مفتوح",neon_c:"مغلق",btn:"EN",
 cats:{coffee:"قهوة",hot:"مشروبات ساخنة",refreshers:"منعشات",milkshakes:"ميلك شيك",smoothies:"سموذي",cold:"مشروبات باردة"},
 notes:{coffee:"النكهات: فانيلا، بندق، كراميل، كراميل مملح · إضافة بوبا +2"}},
-en:{o_phone:"Your mobile number (we call you if anything comes up)",o_phone_err:"Enter a valid mobile number, e.g. 0599123456",o_call:"Call",o_wa:"WhatsApp",z_edit:"Edit",z_mine:"Your way",z_mine_s:"Build your own drink",z_start:"Start",o_title:"Your order",o_empty:"Your cart is empty. Tap a price on any drink to add it.",o_name:"Your name",o_pick:"Pick up in (minutes)",o_place:"Place order",o_total:"Total",o_mine:"Your orders",o_new:"Waiting",o_prep:"Being prepared",o_ready:"Ready for pickup",o_done:"Picked up",o_cancel:"Cancelled",o_in:"in",o_local:"Order saved on this device only (a live link to the café isn't available to you right now).",o_sent:"Order sent. Pickup in",o_cartbar:"Order cart",o_items:"items",o_noname:"Guest",o_tracking:"Your orders",sf_title:"Café screen · Orders",sf_login:"Sign in",sf_out:"Sign out",sf_err:"Wrong email or password.",sf_email:"Email",st_empty:"No orders right now.",st_snd:"Enable alert sound",st_sndon:"Sound on",st_ready:"Ready",st_deliv:"Handed over",st_cancel:"Cancel",st_prepare:"Prepare",o_alert_me:"Your order is being prepared:",nav_orders:"Orders",add_hint:" Tap a price to add it to your order.",o_rm:"Remove",ld1:"Grinding the beans",ld2:"Brewing your coffee",ld3:"Pouring your cup",nav_menu:"Menu",nav_studio:"3D Cup",nav_inside:"Inside Utopia",nav_visit:"Visit",eyebrow:"Arab American University · Jenin",
+en:{dev:"Developed by",o_phone:"Your mobile number (we call you if anything comes up)",o_phone_err:"Enter a valid mobile number, e.g. 0599123456",o_call:"Call",o_wa:"WhatsApp",z_edit:"Edit",z_mine:"Your way",z_mine_s:"Build your own drink",z_start:"Start",o_title:"Your order",o_empty:"Your cart is empty. Tap a price on any drink to add it.",o_name:"Your name",o_pick:"Pick up in (minutes)",o_place:"Place order",o_total:"Total",o_mine:"Your orders",o_new:"Waiting",o_prep:"Being prepared",o_ready:"Ready for pickup",o_done:"Picked up",o_cancel:"Cancelled",o_in:"in",o_local:"Order saved on this device only (a live link to the café isn't available to you right now).",o_sent:"Order sent. Pickup in",o_cartbar:"Order cart",o_items:"items",o_noname:"Guest",o_tracking:"Your orders",sf_title:"Café screen · Orders",sf_login:"Sign in",sf_out:"Sign out",sf_err:"Wrong email or password.",sf_email:"Email",st_empty:"No orders right now.",st_snd:"Enable alert sound",st_sndon:"Sound on",st_ready:"Ready",st_deliv:"Handed over",st_cancel:"Cancel",st_prepare:"Prepare",o_alert_me:"Your order is being prepared:",nav_orders:"Orders",add_hint:" Tap a price to add it to your order.",o_rm:"Remove",ld1:"Grinding the beans",ld2:"Brewing your coffee",ld3:"Pouring your cup",nav_menu:"Menu",nav_studio:"3D Cup",nav_inside:"Inside Utopia",nav_visit:"Visit",eyebrow:"Arab American University · Jenin",
 tagline:"The perfect place for coffee",
 lead:"AAUP's No.1 café. Coffee, hot and cold drinks, milkshakes and smoothies.",
 cta_menu:"View the menu",cta_studio:"Try the 3D cup",cta_visit:"Find us",
